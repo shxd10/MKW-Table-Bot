@@ -1136,14 +1136,13 @@ def private_data_init():
     global beta_bot_key
     global testing_bot_key
     
-    def read_next_token(file_handle, seperation_key = ":") -> str:
-        return file_handle.readline().strip("\n").split(seperation_key)[1].strip()
-    
-    with open(common.PRIVATE_INFO_FILE, "r", encoding="utf-8") as f:
-        real_bot_key = read_next_token(f)
-        beta_bot_key = read_next_token(f)
-        testing_bot_key = read_next_token(f)
-        LoungeAPIFunctions.code = read_next_token(f)
+    with open('properties.json') as f:
+        data = json.load(f)
+        
+        real_bot_key = data['bot_token']
+        beta_bot_key = data['beta_bot_token']
+        testing_bot_key = data['testing_bot_token']
+        LoungeAPIFunctions.code = data['lounge_api_token']
 
 
 #Every 60 seconds, checks to see if anyone was "spamming" the bot and notifies a private channel in my server

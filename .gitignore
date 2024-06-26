@@ -2,6 +2,7 @@
 .project
 .pydevproject
 .idea
+*__pycache__/
 *.pyc
 .settings/org.eclipse.core.resources.prefs
 .vscode

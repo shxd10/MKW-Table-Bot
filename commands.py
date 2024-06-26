@@ -501,8 +501,8 @@ class StatisticCommands:
     @staticmethod
     def parse_track_type(command: str) -> Tuple[Union[bool, None], str]:
         is_ct = None
-        rt_regex = f"\s({'|'.join(StatisticCommands.valid_rt_options)})(\s|$)"
-        ct_regex = f"\s({'|'.join(StatisticCommands.valid_ct_options)})(\s|$)"
+        rt_regex = f"\\s({'|'.join(StatisticCommands.valid_rt_options)})(\\s|$)"
+        ct_regex = f"\\s({'|'.join(StatisticCommands.valid_ct_options)})(\\s|$)"
 
         if re.search(rt_regex,command):
             is_ct = False
@@ -517,7 +517,7 @@ class StatisticCommands:
     @staticmethod
     def parse_track_args(command: str, is_ct=False) -> Tuple[Union[int, None], Union[int, None], Union[int, None], Union[str, None]]:
         min_leaderboard_count = 0
-        min_regex = '(min|min_count|min_races|min_plays)=(\d+)'
+        min_regex = '(min|min_count|min_races|min_plays)=(\\d+)'
         if m := re.search(min_regex,command):
             min_leaderboard_count = int(m.group(2))
             command = re.sub(min_regex,"",command)
@@ -530,7 +530,7 @@ class StatisticCommands:
             tier = int(m.group()[1:])
             command = re.sub(tiers_regex,"",command)
 
-        days_regex = '\s\d+d'
+        days_regex = '\\s\\d+d'
         days = None
         matches = re.findall(days_regex,command)
         if len(matches) > 0:
@@ -2169,7 +2169,7 @@ class TablingCommands:
             useMiis = m.group(2).lower() in yes_terms
             command = re.sub(use_miis_regex, "", command, flags=re.IGNORECASE)
 
-        num_gps_regex = f"(gp|gps|setgps)=(\d+)"
+        num_gps_regex = f"(gp|gps|setgps)=(\\d+)"
         numgps = 3
         if m := re.search(num_gps_regex, command, re.IGNORECASE):
             numgps = int(m.group(2))

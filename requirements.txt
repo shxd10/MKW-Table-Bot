@@ -1,4 +1,4 @@
-discord.py==2.3.2
+discord.py==2.4
 opencv-python
 beautifulsoup4
 humanize
@@ -16,3 +16,4 @@ fastapi==0.90.1
 uvicorn[standard]
 html2image
 Pillow==9.5.0
+setuptools

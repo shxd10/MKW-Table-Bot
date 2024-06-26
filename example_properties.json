@@ -1,4 +1,9 @@
 {
+    "bot_token": "BOT_TOKEN_GOES_HERE",
+    "beta_bot_token": "NOT_APPLICABLE",
+    "testing_bot_token": "NOT_APPLICABLE",
+    "lounge_api_token": "NOT_APPLICABLE",
+
     "mode": "dev",
     "error_log_channel": 0,
     "public_api_url": "https://mkw-table-bot-api.loca.lt",
