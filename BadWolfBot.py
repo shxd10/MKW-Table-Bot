@@ -26,6 +26,7 @@ import discord
 import time
 from discord.ext import tasks
 from discord.ext import commands as ext_commands
+from discord.ext.commands import Context
 import traceback
 import sys
 import json
@@ -226,8 +227,8 @@ def get_prefix(bot,msg: discord.Message) -> str:
     return ext_commands.when_mentioned_or(prefix)(bot, msg)
 
 class BadWolfBot(ext_commands.Bot):
-    def __init__(self):
-        super().__init__(description="MKW Table Bot", owner_ids=common.OWNERS, intents=intents, chunk_guilds_at_startup=False) #debug_guilds=common.SLASH_GUILDS
+    async def __init__(self):
+        super().__init__(command_prefix="", description="MKW Table Bot", owner_ids=common.OWNERS, intents=intents, chunk_guilds_at_startup=False) #debug_guilds=common.SLASH_GUILDS
         self.table_bots: Dict[int, Dict[int, TableBot.ChannelBot]] = defaultdict(dict)
         self.lounge_submissions = lounge_submissions
         self.mentions = None
@@ -237,7 +238,7 @@ class BadWolfBot(ext_commands.Bot):
 
         if REGISTER_SLASH_COMMANDS:
             for ext in SLASH_EXTENSIONS:
-                self.load_extension(ext)
+                await self.load_extension(ext)
 
     #Strips the given prefix from the start of the command
     #Note, the caller must ensure that the given string has a prefix by using has_prefix to ensure proper behaviour
@@ -546,7 +547,7 @@ class BadWolfBot(ext_commands.Bot):
         except discord.errors.Forbidden: # bot doesn't have application commands scope; this should be retroactively given in the future, so we ignore any 403 Forbidden - Missing Access errors
             pass
     
-    async def slash_interaction_pre_invoke(self, ctx: discord.ApplicationContext, args=None):
+    async def slash_interaction_pre_invoke(self, ctx: Context, args=None):
         
         message = InteractionUtils.create_proxy_msg(ctx.interaction, ctx=ctx, args=args)
 
@@ -561,7 +562,7 @@ class BadWolfBot(ext_commands.Bot):
         return name.strip(), message, this_bot, '/', is_lounge_server
 
 
-    async def on_application_command_error(self, ctx: discord.ApplicationContext, error):
+    async def on_application_command_error(self, ctx: Context, error):
         """
         Slash command errors
         """
@@ -1233,7 +1234,7 @@ async def initialize():
     data_init()
     await DataTracker.initialize()
 
-    bot = BadWolfBot()
+    bot = await BadWolfBot()
     await start_bot()
     await api_init()
 

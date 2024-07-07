@@ -2,10 +2,11 @@ import asyncio
 from datetime import datetime
 from typing import Union
 import discord
+from discord.ext.commands import Context
 import SmartTypes as ST
 import common
 
-def bot_admin_check(ctx: discord.ApplicationContext):
+def bot_admin_check(ctx: Context):
     can = common.is_bot_admin(ctx.author)
     return can 
 
@@ -23,7 +24,7 @@ def convert_key_to_command(key):
     }
     return map[key]
 
-async def safe_defer(ctx: discord.ApplicationContext):
+async def safe_defer(ctx: Context):
     try:
         await asyncio.sleep(1.5)
         if not ctx.responded:
@@ -59,7 +60,7 @@ class MessageWrapper():
         return self.message.__str__()
 
 class ChannelWrapper():
-    def __init__(self, channel: discord.TextChannel, ctx: discord.ApplicationContext):
+    def __init__(self, channel: discord.TextChannel, ctx: Context):
         self.channel = channel
         self.ctx = ctx
         if self.ctx:

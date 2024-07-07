@@ -1,9 +1,9 @@
 import discord
-from discord.ext import pages, commands
+from discord.ext.commands import Paginator
 from typing import Optional, Union
 import InteractionUtils
 
-class MessagePaginator(pages.Paginator):
+class MessagePaginator(Paginator):
     def __init__(self, pages, show_disabled=True, show_indicator=False, timeout=120):
         if len(pages)==0:
             pages = ["```Nothing to display```"]
